@@ -11,6 +11,12 @@ const task42Btn = document.getElementById("task4.2");
 const task43Btn = document.getElementById("task4.3");
 const task44Btn = document.getElementById("task4.4");
 const label4 = document.getElementById("label4");
+const task5Btn = document.getElementById("task5");
+const label5 = document.getElementById("label5");
+const task6Btn = document.getElementById("task6");
+const label6 = document.getElementById("label6");
+const task7Btn = document.getElementById("task7")
+const label7 = document.getElementById("label7")
 
 //Асинхронні функції з використанням функцій зворотного виклику
 
@@ -157,4 +163,68 @@ Promise.race([getFirstPromise(), getSecondPromise()])
         label4.textContent = "Promise.any помилка";
     });});
 
-    
+
+//Асинхронні функції з використанням async/await
+
+async function asyncTask() {
+    return new Promise((resolve, reject) => {
+        setTimeout(()=> {
+            resolve(5+4); 
+        }, 3000)
+
+    }).then((res) => {label5.textContent = res;
+        return res;});
+}
+
+ task5Btn.addEventListener("click", async ()=> {
+    label5.textContent = "Adding...";
+    const result = await asyncTask();
+    label5.textContent = `Result: ${result}`;
+} )
+
+// Асинхронні ітератори
+// g. Асинхронні ітератори
+
+async function* asyncGenerator() {
+    const data = ["Дані 1", "Дані 2", "Дані 3"];
+    for (const item of data) {
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // Затримка 1 секунда
+        yield item;
+    }
+}
+
+task6Btn.addEventListener("click", async () => {
+    const label = document.getElementById("label6");
+    const iterator = asyncGenerator();
+    for await (const value of iterator) {
+        label.textContent = `Отримано: ${value}`;
+        console.log("Отримано:", value);
+    }
+});
+
+// h. Асинхронні генератори
+
+async function* fetchUserData() {
+    const users = [
+        { id: 1, name: "Іван" },
+        { id: 2, name: "Олена" },
+        { id: 3, name: "Петро" }
+    ];
+
+    for (const user of users) {
+        await new Promise((resolve) => setTimeout(resolve, 1500)); // Затримка 1.5 секунди
+        yield user;
+    }
+}
+
+task7Btn.addEventListener("click", async () => {
+    const userGenerator = fetchUserData();
+    for await (const user of userGenerator) {
+        label7.textContent = `Користувач: ${user.name}`;
+        console.log("Користувач: ", user);
+    }
+});
+
+
+
+
