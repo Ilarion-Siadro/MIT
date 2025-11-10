@@ -11,16 +11,15 @@ function fetchData(id) {
 function fetchGame(name) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {  
-            const game = { username: "Ilarion",title: `User: ${name} playing in Call of Duty` };
+            const game = { id: '1', username: "Ilarion",title: `User: ${username} playing in Call of Duty` };
             resolve(game);
         }, 2000);
     });
 }
 
 function run() {
-    fetchData(1).then(data => {
-        console.log("Received:", data.username);
-        fetchGame(data.name).then(game => { 
+    fetchData(1).then(userName => {
+       fetchGame(userName.username).then(game => { 
             console.log("Received:", game.title);
         });
         

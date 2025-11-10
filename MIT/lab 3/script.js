@@ -4,7 +4,13 @@ const button2 = document.getElementById("task2");
 const label2 = document.getElementById("label2");
 const button3 = document.getElementById("task3");
 const label3 = document.getElementById("label3");
-
+const input1 = document.getElementById("first");
+const input2 = document.getElementById("second");
+const task41Btn = document.getElementById("task4.1");
+const task42Btn = document.getElementById("task4.2");
+const task43Btn = document.getElementById("task4.3");
+const task44Btn = document.getElementById("task4.4");
+const label4 = document.getElementById("label4");
 
 //Асинхронні функції з використанням функцій зворотного виклику
 
@@ -47,10 +53,8 @@ button2.addEventListener("click", () => {
     }); 
 });
 
-
-
 button3.addEventListener("click", () => {
-    new Promise((resolve,reject) => {
+    new Promise((resolve) => {
         label3.textContent = "Крок 1: Починаємо...";
         setTimeout(() => resolve("Крок 1 завершено"), 1000);
        
@@ -82,3 +86,75 @@ button3.addEventListener("click", () => {
         label3.textContent = err;
     });
 });
+
+// Перший проміс
+function getFirstPromise() {
+    return new Promise((resolve,reject) => {
+    setTimeout(() => {
+        if(input1.value == 1){
+
+        console.log("1 Promise finished success");
+        resolve("1 Promise finished success")
+    
+    }
+        else{
+             console.log("1 Promise finished with error");
+             reject("1 Promise finished with error")
+            }
+    },  5000);})};
+
+// Другий проміс
+function getSecondPromise() {
+return new Promise((resolve,reject) => {
+    setTimeout(() => {
+        if(input2.value == 1){
+
+        console.log("2 Promise finished success");
+        resolve("2 Promise finished success")
+    
+    }
+        else{
+             console.log("2 Promise finished with error");
+             reject("2 Promise finished with error")
+            }
+    },  3000);});}
+// Використання Promise.all успішно завершення всіх промісів
+task41Btn.addEventListener("click", () => {
+    Promise.all([getFirstPromise(), getSecondPromise()])
+    .then((results) => {
+        console.log(results);
+        label4.textContent = "Promise.all успішно завершено: ";
+    })
+    .catch((error) => {
+        console.log(error);
+        label4.textContent = "Promise.all помилка";
+    });});
+
+// Використання Promise.allSettled результати всіх промісів
+task42Btn.addEventListener("click", () => {
+    Promise.allSettled([getFirstPromise(), getSecondPromise()])
+    .then((results) => {
+        console.log(results);
+        label4.textContent = "Promise.allSettled завершено: ";})});
+
+// Використання Promise.any перший який виконається успішно
+task43Btn.addEventListener("click", () => {
+    Promise.any([getFirstPromise(), getSecondPromise()])
+    .then((results) => {
+        console.log(results);
+        label4.textContent = "Promise.any завершено: ";})
+    .catch((error) => {
+        label4.textContent = "Promise.any помилка";
+    });});
+// Використ Promise.race перший який виконається незалежно від успіху чи помилки
+task44Btn.addEventListener("click", () => {
+Promise.race([getFirstPromise(), getSecondPromise()])
+    .then((results) => {
+        console.log(results);
+        label4.textContent = "Promise.any завершено: ";})
+    .catch((error) => {
+        console.log(error);
+        label4.textContent = "Promise.any помилка";
+    });});
+
+    
