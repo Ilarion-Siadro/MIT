@@ -21,7 +21,7 @@ function raceAsyncOperations(asyncOp1, asyncOp2, callback1, callback2) {
 // Приклад використання
 function asyncOperation1() {
     return new Promise((resolve) => {
-        setTimeout(() => resolve("Операція 1 завершена"), 2000);
+        setTimeout(() => resolve("Операція 1 завершена"), 1000.1);
     });
 }
 

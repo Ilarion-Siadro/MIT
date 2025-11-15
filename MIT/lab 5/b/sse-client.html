@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Біржові котирування</title>
+</head>
+<body>
+    <h1>Біржові котирування</h1>
+    <ul id="stocks"></ul>
+
+    <script>
+        const eventSource = new EventSource('http://localhost:8081/stocks');
+
+        eventSource.onmessage = (event) => {
+            const stocks = JSON.parse(event.data);
+            const stocksList = document.getElementById('stocks');
+            stocksList.innerHTML = '';
+
+            stocks.forEach(stock => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${stock.symbol}: $${stock.price}`;
+                stocksList.appendChild(listItem);
+            });
+        };
+
+        eventSource.onerror = () => {
+            console.error('Помилка з SSE сервером');
+        };
+    </script>
+</body>
+</html>

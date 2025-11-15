@@ -38,7 +38,7 @@ async function runAllSettledDemo() {
   // Promise.allSettled чекає на завершення всіх, але наші обгортки повертають об'єкти з finishedAt
   const settled = await Promise.allSettled(wrapped);
 
-  // settled — масив результатів для кожної обгортки; кожен результат має {status: 'fulfilled'|'rejected', value: ...}
+
   // витягаємо внутрішні об'єкти (value коли fulfilled)
   const payloads = settled.map(s => (s.status === 'fulfilled' ? s.value : s.reason));
 
